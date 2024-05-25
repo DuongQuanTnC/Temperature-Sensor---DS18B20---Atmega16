@@ -1,30 +1,30 @@
 #include "LCD.h"
 
 void LCD_command(unsigned char command) {
-	LCD_CONTROL_PORTD &= ~(1 << LCD_RS);//RS xuong 0 de ghi lenh
-	LCD_CONTROL_PORTD &= ~(1 << LCD_RW);//RW xuong 0 de ghi lenh
+	LCD_CONTROL_PORT &= ~(1 << LCD_RS);//RS xuong 0 de ghi lenh
+	LCD_CONTROL_PORT &= ~(1 << LCD_RW);//RW xuong 0 de ghi lenh
 	_delay_ms(1);
-	LCD_DATA_PORTC = command;
-	LCD_CONTROL_PORTD |= (1 << LCD_E);
+	LCD_DATA_PORT = command;
+	LCD_CONTROL_PORT |= (1 << LCD_E);
 	_delay_ms(1);
-	LCD_CONTROL_PORTD &= ~(1 << LCD_E);
+	LCD_CONTROL_PORT &= ~(1 << LCD_E);
 	_delay_ms(3);
 }
 
 void LCD_data(unsigned char data) {
-	LCD_CONTROL_PORTD |= (1 << LCD_RS); //  RS len 1 de ghi du lieu
-	LCD_CONTROL_PORTD &= ~(1 << LCD_RW); //  chân RW lên 0 de ghi du lieu
+	LCD_CONTROL_PORT |= (1 << LCD_RS); //  RS len 1 de ghi du lieu
+	LCD_CONTROL_PORT &= ~(1 << LCD_RW); //  chân RW lên 0 de ghi du lieu
 	_delay_ms(1);
-	LCD_DATA_PORTC = data; //gui du lieu den chan
-	LCD_CONTROL_PORTD |= (1 << LCD_E); // Kich hoat chân E
+	LCD_DATA_PORT = data; //gui du lieu den chan
+	LCD_CONTROL_PORT |= (1 << LCD_E); // Kich hoat chân E
 	_delay_ms(1);
-	LCD_CONTROL_PORTD &= ~(1 << LCD_E); // tat chan E
+	LCD_CONTROL_PORT &= ~(1 << LCD_E); // tat chan E
 	_delay_ms(1);
 }
 
 void LCD_init() {
-	LCD_DATA_DDRC = 0xFF; // output
-	LCD_CONTROL_DDRD |= (1 << LCD_RS) | (1 << LCD_RW) | (1 << LCD_E);
+	LCD_DATA_DDR = 0xFF; // output
+	LCD_CONTROL_DDR |= (1 << LCD_RS) | (1 << LCD_RW) | (1 << LCD_E);
 	_delay_ms(1);
 	LCD_command(0x38); // 2 dong, 8 bit
 	LCD_command(0x0C); // Bat hien thi chu, tat con tro

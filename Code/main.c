@@ -9,7 +9,9 @@ float wTemp = 24.1;
 int main(void)
 {	
 	LCD_init();
-    while (1) 
+	LED_CONTROL_DDR &= ~((1<<LED_R) | (1<<LED_G) | (1<<LED_Y));
+	
+    while(1) 
     {
 		temp = readTemp();
 		clearCharArray(temp_str);

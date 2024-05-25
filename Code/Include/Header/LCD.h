@@ -3,13 +3,13 @@
 #define F_CPU 8000000ul
 #include <avr/io.h>
 #include <util/delay.h>
-#define LCD_DATA_PORTC			PORTC
-#define LCD_DATA_DDRC			DDRC
-#define LCD_CONTROL_PORTD		PORTD
-#define LCD_CONTROL_DDRD			DDRD
-#define LCD_RS	0
-#define LCD_RW	1
-#define LCD_E	2
+#define LCD_DATA_PORT			PORTD
+#define LCD_DATA_DDR			DDRD
+#define LCD_CONTROL_PORT		PORTB
+#define LCD_CONTROL_DDR			DDRB
+#define LCD_RS	PB2
+#define LCD_RW	PB1
+#define LCD_E	PB0
 void LCD_command(unsigned char command);
 void LCD_data(unsigned char data);
 void LCD_init() ;

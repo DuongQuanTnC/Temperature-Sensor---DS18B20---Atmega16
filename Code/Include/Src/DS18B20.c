@@ -6,31 +6,31 @@ extern float temp;
 uint8_t reset()
 {
 	uint8_t re;
-	DDRA |= (1<<WIRE_PIN);
-	PORTA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR |= (1<<WIRE_PIN);
+	SENSOR_CONTROL_PORT &= ~(1<<WIRE_PIN);
 	_delay_us(480);
-	DDRA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR &= ~(1<<WIRE_PIN);
 	_delay_us(70);
-	re = PINA & (1<<WIRE_PIN);
+	re = SENSOR_CONTROL_PIN & (1<<WIRE_PIN);
 	_delay_us(420);
 	return re;
 }
 
 void write1()
 {
-	DDRA |= (1<<WIRE_PIN);
-	PORTA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR |= (1<<WIRE_PIN);
+	SENSOR_CONTROL_PORT &= ~(1<<WIRE_PIN);
 	_delay_us(6);
-	DDRA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR &= ~(1<<WIRE_PIN);
 	_delay_us(64);
 }
 
 void write0()
 {
-	DDRA |= (1<<WIRE_PIN);
-	PORTA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR |= (1<<WIRE_PIN);
+	SENSOR_CONTROL_PORT &= ~(1<<WIRE_PIN);
 	_delay_us(60);
-	DDRA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR &= ~(1<<WIRE_PIN);
 	_delay_us(10);
 }
 
@@ -45,12 +45,12 @@ void writebit(unsigned char bit)
 uint8_t readbit()
 {
 	uint8_t res;
-	DDRA |= (1<<WIRE_PIN);
-	PORTA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR |= (1<<WIRE_PIN);
+	SENSOR_CONTROL_PORT &= ~(1<<WIRE_PIN);
 	_delay_us(6);
-	DDRA &= ~(1<<WIRE_PIN);
+	SENSOR_CONTROL_DDR &= ~(1<<WIRE_PIN);
 	_delay_us(9);
-	res = PINA & (1<<WIRE_PIN);
+	res = SENSOR_CONTROL_PIN & (1<<WIRE_PIN);
 	_delay_us(55);
 	return res;
 }
@@ -95,18 +95,16 @@ float readTemp()
 
 void handleLED(float wTemp)
 {
-	PORTD &= ~((1<<LED_R) | (1<<LED_G) | (1<<LED_Y)); 
-
 	if(temp < wTemp - 0.5)
 	{
-		PORTD |= (1<<LED_R); 
+		LED_CONTROL_PORT |= (1<<LED_R); 
 	}
 	else if(temp > wTemp + 0.5)
 	{
-		PORTD |= (1<<LED_G); 
+		LED_CONTROL_PORT |= (1<<LED_G); 
 	}
 	else if((wTemp - 0.5 < temp) && (temp < wTemp + 0.5))
 	{
-		PORTD |= (1<<LED_Y); 
+		LED_CONTROL_PORT |= (1<<LED_Y); 
 	}
 }
